@@ -1,0 +1,43 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add cross-env larvel-mix nodemon resolve-url-loader sass sass-loader vue-template-compiler
+
+PATH: 
+  C:\Python38\Scripts\;C:\Python38\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\cygwin64\bin;C:\Program Files (x86)\mingw-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0\mingw32\bin;C:\Program Files\Java\jdk1.8.0_231\bin;C:\Program Files (x86)\sbt\bin;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files\nodejs\;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\MinGW\bin;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\Prakash Anand\AppData\Local\Programs\Python\Python36\Scripts\;C:\Users\Prakash Anand\AppData\Local\Programs\Python\Python36\;C:\Users\Prakash Anand\AppData\Local\Microsoft\WindowsApps;C:\Program Files\R\R-3.6.1\bin;C:\Program Files\Sublime Text 3;C:\cygwin64\bin;C:\Program Files (x86)\mingw-w64\i686-8.1.0-posix-dwarf-rt_v6-rev0\mingw32\bin;C:\Program Files\Java\jdk1.8.0_231\bin;C:\Program Files\heroku\bin;C:\Users\Prakash Anand\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Prakash Anand\AppData\Roaming\npm;C:\Users\Prakash Anand\AppData\Local\Yarn\bin;C:\Users\Prakash Anand\AppData\Local\hyper\app-3.0.2\resources\bin;C:\Program Files\MongoDB\Server\4.2\bin;
+
+Yarn version: 
+  1.22.4
+
+Node version: 
+  12.16.3
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/larvel-mix: Not found
+      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:66096:18)
+      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:140748:22)
+      at Request.emit (events.js:310:20)
+      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141720:10)
+      at Request.emit (events.js:310:20)
+      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141642:12)
+      at Object.onceWrapper (events.js:416:28)
+      at IncomingMessage.emit (events.js:322:22)
+      at endReadableNT (_stream_readable.js:1187:12)
+      at processTicksAndRejections (internal/process/task_queues.js:84:21)
+
+npm manifest: 
+  {
+    "name": "backup_realtime_pizza",
+    "version": "1.0.0",
+    "description": "Real Time pizza order tracking web application",
+    "main": "index.js",
+    "author": "Prakash Anand",
+    "license": "MIT"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
