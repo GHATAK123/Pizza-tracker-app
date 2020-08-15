@@ -22,6 +22,12 @@ addToCart.forEach((btn) => {
    btn.addEventListener('click',(e) => {
      let pizza = JSON.parse(btn.dataset.pizza)
      updateCart(pizza)
-     console.log(pizza);
+     
    })
-})
+});
+const alertMsg = document.querySelector('#success-alert')
+if(alertMsg) {
+    setTimeout(() => {
+        alertMsg.remove()
+    }, 2000)
+}
