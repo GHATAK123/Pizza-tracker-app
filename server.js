@@ -4,8 +4,10 @@ const app=express()
 const ejs=require('ejs')
 const path=require('path')
 const expressLayout=require('express-ejs-layouts')
+const Emitter = require('events')
 
-const PORT=process.env.PORT || 3000
+const PORT=process.env.PORT;
+
 const mongoose=require('mongoose')
 const session=require('express-session')
 const flash=require('express-flash')
@@ -27,6 +29,9 @@ let mongoStore=new MongoDbStore({
   mongooseConnection:connection,
   collection:'sessions'
 })
+//Event Emitter
+const eventEmitter = new Emitter();
+app.set('eventEmitter',eventEmitter);
 // session config
 app.use(session({
   secret:process.env.COOKIE_SECRET,
@@ -63,6 +68,29 @@ require('./routes/web')(app)
 
 
 
-app.listen(PORT,()=>{
+const server = app.listen(PORT,()=>{
   console.log(`Listening on port  ${PORT}`);
 })
+
+const io = require('socket.io')(server)
+
+io.on('connection',(socket)=>{
+  // console.log(socket.id);
+  socket.on('join',(orderId)=>{
+    
+    socket.join(orderId)
+    
+  })
+
+})
+
+eventEmitter.on('orderUpdated',(data)=>{
+  io.to(`order_${data.id}`).emit('orderUpdated',data)
+
+})
+
+eventEmitter.on('orderPlaced',(data)=>{
+    io.to('adminRoom').emit('orderPlaced',data)
+})
+
+

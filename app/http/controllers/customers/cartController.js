@@ -12,12 +12,6 @@ function cartController() {
           totalPrice:0
         }
         
-
-        // if(cart.items[req.body._id])
-        // {
-
-
-        // }
       }
 
       let cart=req.session.cart

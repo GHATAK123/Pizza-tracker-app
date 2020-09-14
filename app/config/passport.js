@@ -1,6 +1,7 @@
 const LocalStrategy=require('passport-local').Strategy
 const User  = require('../models/user')
 const bcrypt = require('bcrypt')
+const PORT=process.env.PORT;
 function init(passport) {
   passport.use(new LocalStrategy({usernameField:'email'},async (email,password,done) => {
     const user= await User.findOne({email:email})
