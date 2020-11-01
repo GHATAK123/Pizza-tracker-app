@@ -3,6 +3,7 @@ const moment = require('moment')
 function orderController(){
   return  {
     store(req,res){
+       
       const {phone,address} = req.body
       if(!phone || !address){
         req.flash('error','All fields are required')
@@ -19,13 +20,13 @@ function orderController(){
       })
       order.save().then(result =>{
         Order.populate(result,{path:'customerId'},(err,placedOrder)=>{
-          req.flash('success','Order placed successfully')
+          // req.flash('success','Order placed successfully')
         delete req.session.cart
 
         const eventEmitter = req.app.get('eventEmitter')
          eventEmitter.emit('orderPlaced',placedOrder)
-
-        return res.redirect('/customer/orders')
+          return res.json({message :'Order placed successfully'});
+        // return res.redirect('/customer/orders')
 
         })
         

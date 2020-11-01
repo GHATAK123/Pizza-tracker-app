@@ -80,6 +80,42 @@ function updateStatus(order) {
 
 updateStatus(order);
 
+// Ajax call
+const paymentForm=document.querySelector('#payment-form');
+if(paymentForm){
+  paymentForm.addEventListener('submit',(e)=>{
+    e.preventDefault();
+    let formData = new FormData(paymentForm);
+    let formObject = {};
+    for(let [key,value] of formData.entries()){
+        formObject[key]=value;
+  
+    }
+    axios.post('/orders',formObject).then((res)=>{
+      new Noty({
+        type:'success',
+        timeout:1000,
+        text: res.data.message,
+        progressBar:false,
+        layout:'topLeft'
+      }).show();
+      setTimeout(()=>{
+        window.location.href = '/customer/orders';
+
+      },1000)
+      
+    }).catch((err)=>{
+      console.log(err);
+  
+    })
+      console.log(formObject)
+      
+  })
+  
+
+}
+
+
 // socket
 let socket = io()
 
