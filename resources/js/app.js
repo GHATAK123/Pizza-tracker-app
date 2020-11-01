@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Noty from 'noty';
 import moment from 'moment';
+import {initStripe} from './stripe';
 
 
 import {initAdmin }  from './admin';
@@ -80,41 +81,11 @@ function updateStatus(order) {
 
 updateStatus(order);
 
+
+
+
 // Ajax call
-const paymentForm=document.querySelector('#payment-form');
-if(paymentForm){
-  paymentForm.addEventListener('submit',(e)=>{
-    e.preventDefault();
-    let formData = new FormData(paymentForm);
-    let formObject = {};
-    for(let [key,value] of formData.entries()){
-        formObject[key]=value;
-  
-    }
-    axios.post('/orders',formObject).then((res)=>{
-      new Noty({
-        type:'success',
-        timeout:1000,
-        text: res.data.message,
-        progressBar:false,
-        layout:'topLeft'
-      }).show();
-      setTimeout(()=>{
-        window.location.href = '/customer/orders';
-
-      },1000)
-      
-    }).catch((err)=>{
-      console.log(err);
-  
-    })
-      console.log(formObject)
-      
-  })
-  
-
-}
-
+initStripe();
 
 // socket
 let socket = io()
