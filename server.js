@@ -14,8 +14,7 @@ const flash=require('express-flash')
 const MongoDbStore = require('connect-mongo')(session)
 const passport = require('passport')
 // Database Connection
-const url = 'mongodb+srv://root:toor@pizza.uja22.mongodb.net/pizza?retryWrites=true&w=majority';
-mongoose.connect(url,{ useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology:true,useFindAndModify:true
+mongoose.connect(process.env.MONGO_CONNECTION_URL,{ useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology:true,useFindAndModify:true
 });
 const connection = mongoose.connection;
 connection.once('open',()=>{
@@ -65,6 +64,10 @@ app.set('views',path.join(__dirname,'/resources/views'))
 app.set('view engine','ejs')
 // routes 
 require('./routes/web')(app)
+app.use((req,res)=>{
+  res.status(404).render('errors/404')
+
+})
 
 
 
