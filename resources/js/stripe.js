@@ -2,6 +2,7 @@ import axios from 'axios';
 import Noty from 'noty';
 import moment from 'moment';
 import {loadStripe} from '@stripe/stripe-js';
+import {placeOrder} from './apiService';
 export async function initStripe() {
   const stripe = await loadStripe('pk_test_51Him4PImoXzOYK9BTav036K02rYO4oHXE22Q8bd62qpE0t4mcNhMS2dOHZjL2aZdJkO0mCDXhs2aZj4BwUG7ozrs00tgeFlE5e');
   let card = null
@@ -51,24 +52,27 @@ if(paymentForm){
         formObject[key]=value;
   
     }
-    axios.post('/orders',formObject).then((res)=>{
-      new Noty({
-        type:'success',
-        timeout:1000,
-        text: res.data.message,
-        progressBar:false,
-        layout:'topLeft'
-      }).show();
-      setTimeout(()=>{
-        window.location.href = '/customer/orders';
 
-      },1000)
-      
+    if(!card){
+      placeOrder(formObject);
+      return;
+    }
+
+    // verify card
+    stripe.createToken(card).then((result)=>{
+          console.log(result);
+          formObject.stripeToken = result.token.id;
+          placeOrder(formObject);
     }).catch((err)=>{
       console.log(err);
-  
+
     })
-      console.log(formObject)
+
+
+
+
+
+    
       
   })
   

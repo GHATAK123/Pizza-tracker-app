@@ -27425,6 +27425,42 @@ function initAdmin(socket) {
 
 /***/ }),
 
+/***/ "./resources/js/apiService.js":
+/*!************************************!*\
+  !*** ./resources/js/apiService.js ***!
+  \************************************/
+/*! exports provided: placeOrder */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "placeOrder", function() { return placeOrder; });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var noty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! noty */ "./node_modules/noty/lib/noty.js");
+/* harmony import */ var noty__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(noty__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function placeOrder(formObject) {
+  axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/orders', formObject).then(function (res) {
+    new noty__WEBPACK_IMPORTED_MODULE_1___default.a({
+      type: 'success',
+      timeout: 1000,
+      text: res.data.message,
+      progressBar: false,
+      layout: 'topLeft'
+    }).show();
+    setTimeout(function () {
+      window.location.href = '/customer/orders';
+    }, 1000);
+  })["catch"](function (err) {
+    console.log(err);
+  });
+  console.log(formObject);
+}
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -27567,6 +27603,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _stripe_stripe_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @stripe/stripe-js */ "./node_modules/@stripe/stripe-js/dist/stripe.esm.js");
+/* harmony import */ var _apiService__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./apiService */ "./resources/js/apiService.js");
 
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -27586,6 +27623,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -27676,21 +27714,19 @@ function _initStripe() {
                   _iterator.f();
                 }
 
-                axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/orders', formObject).then(function (res) {
-                  new noty__WEBPACK_IMPORTED_MODULE_2___default.a({
-                    type: 'success',
-                    timeout: 1000,
-                    text: res.data.message,
-                    progressBar: false,
-                    layout: 'topLeft'
-                  }).show();
-                  setTimeout(function () {
-                    window.location.href = '/customer/orders';
-                  }, 1000);
+                if (!card) {
+                  Object(_apiService__WEBPACK_IMPORTED_MODULE_5__["placeOrder"])(formObject);
+                  return;
+                } // verify card
+
+
+                stripe.createToken(card).then(function (result) {
+                  console.log(result);
+                  formObject.stripeToken = result.token.id;
+                  Object(_apiService__WEBPACK_IMPORTED_MODULE_5__["placeOrder"])(formObject);
                 })["catch"](function (err) {
                   console.log(err);
                 });
-                console.log(formObject);
               });
             }
 
