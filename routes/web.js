@@ -6,6 +6,7 @@ const AdminOrderController = require('../app/http/controllers/admin/orderControl
 const statusController =  require('../app/http/controllers/admin/statusController');
 const userProfileController =  require('../app/http/controllers/admin/userProfileController');
 const paymentController =  require('../app/http/controllers/admin/paymentController');
+const adminUserProfileControler =  require('../app/http/controllers/admin/adminController');
 
 const guest=require('../app/http/middlewares/guest')
 const auth=require('../app/http/middlewares/auth')
@@ -29,6 +30,7 @@ function initRoutes(app) {
   app.post('/admin/order/status',admin,statusController().update)
   app.post('/admin/user-profile/status',admin,userProfileController().update)
   app.post('/admin/payment/status',admin,paymentController().update)
+  app.post('/admin/profile/status',admin,adminController().update)
 
 }
 
