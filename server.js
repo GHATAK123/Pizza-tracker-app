@@ -5,6 +5,8 @@ const ejs=require('ejs')
 const path=require('path')
 const expressLayout=require('express-ejs-layouts')
 const Emitter = require('events')
+const DB_CONNECTION_URL=process.env.MONGO_CONNECTION_URL
+const COOKIE_SECRET=process.env.COOKIE_SECRET
 
 const PORT=process.env.PORT;
 
@@ -14,7 +16,7 @@ const flash=require('express-flash')
 const MongoDbStore = require('connect-mongo')(session)
 const passport = require('passport')
 // Database Connection
-mongoose.connect(process.env.MONGO_CONNECTION_URL,{ useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology:true,useFindAndModify:true
+mongoose.connect(DB_CONNECTION_URL,{ useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology:true,useFindAndModify:true
 });
 const connection = mongoose.connection;
 connection.once('open',()=>{
@@ -33,7 +35,7 @@ const eventEmitter = new Emitter();
 app.set('eventEmitter',eventEmitter);
 // session config
 app.use(session({
-  secret:process.env.COOKIE_SECRET,
+  secret:COOKIE_SECRET,
   resave:false,
   store:mongoStore,
   saveUninitialized:false,
@@ -78,9 +80,7 @@ const server = app.listen(PORT,()=>{
 const io = require('socket.io')(server)
 
 io.on('connection',(socket)=>{
-  // console.log(socket.id);
   socket.on('join',(orderId)=>{
-    
     socket.join(orderId)
     
   })
